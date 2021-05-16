@@ -53,7 +53,6 @@ import copy # for deepcopy
 import collections
 
 import multiprocessing
-# from genetic_algorithm import evolve_pop
 
 
 SMALL_NUMBERS = tuple(range(1,11))
@@ -386,7 +385,6 @@ def decompose(T, prefix = None):
     tempLnum = []
 
     for i,val in enumerate(T):
-        x = type(val)
         if type(val) == str or type(val) == int:
             if val in ['*', '+', '-']:
                 tempAop.append(prefix+[i])
@@ -781,6 +779,7 @@ def task2(Q, target, popSize, returnQueue, maxGens=-1):
 
 def task2Run():
     timoutTime = 2
+
     gameCount = 30
     numPairs = 20
     stepSize = 25
@@ -810,9 +809,9 @@ def task2Run():
             returnQueue.empty()
 
             #How many large numbers
-            largeNumbers = random.sample(largeNumbers ,random.randint(0,numLargerNumbersToDraw))
+            largeNumbersRound = random.sample(largeNumbers ,random.randint(0,numLargerNumbersToDraw))
             #Generate random number for Q
-            Q = random.sample(range(smallNumbersLower,smallNumbersHigher), inputSize-len(largeNumbers)) + largeNumbers
+            Q = random.sample(range(smallNumbersLower,smallNumbersHigher), inputSize-len(largeNumbersRound)) + largeNumbersRound
             #Generate random target
             target = random.randint(minTarget, maxTarget)
 
@@ -854,9 +853,12 @@ def task2Run():
 
     #Print success rate for each population size
     outputStr = map(lambda k: f'popSize of {k} has success rate of {gameDict[k]["successCount"]/gameCount} for {gameCount} games.', gameDict.keys())
+    outputFile = open("outputFile.txt","w")
     for l in outputStr:
         print(l)
         print("")
+        outputFile.write(l+"\n")
+    outputFile.close()
 
 
 if __name__ == "__main__":
