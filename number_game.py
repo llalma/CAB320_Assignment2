@@ -55,6 +55,8 @@ import collections
 import multiprocessing
 
 
+
+
 SMALL_NUMBERS = tuple(range(1,11))
 LARGE_NUMBERS = (25, 50, 75, 100)
 
@@ -214,32 +216,6 @@ def expr_tree_2_polish_str(T):
     
 
 # ----------------------------------------------------------------------------
-
-class ExpNode:
-    """Class for a node in Expression tree."""
-    def __init__(self, val):
-        self.val = val
-        self.left = None
-        self.right = None
-
-    def toFormat(self):
-        return [self.val, self.left, self.right]
-
-
-def expTreeTraverse(root):
-    tempQ = []
-    tempQ.append(root)
-
-    for node in tempQ:
-        if node.left != None:
-            tempQ.append(node.left)
-        if node.right != None:
-            tempQ.append(node.right)
-
-
-    return tempQ
-
-
 
 def polish_str_2_expr_tree(pn_str):
     '''
@@ -442,8 +418,7 @@ def replace_subtree(T, a, S):
 
     Warning: the original tree T is modified. 
              Use copy.deepcopy()  if you want to preserve the original tree.
-    '''    
-    
+    '''
     # base case, address empty
     if len(a)==0:
         return S
@@ -628,7 +603,7 @@ def cross_over(P1, P2, Q):
 
     # ABOUT 3 LINES DELETED
     d2 = len(Aop_2[i2])-1
-    aS2 = Aop_2[i2][:d2] # address of the subtree S1
+    aS2 = Aop_2[i2][:d2] # address of the subtree S2
     S2 = get_item(C2, aS2)
 
     # print(' DEBUG -------- S1 and S2 ----------') # DEBUG
@@ -784,7 +759,7 @@ def task2Run():
     numPairs = 20
     stepSize = 25
     startPopSize = 200
-    endPopSize = 200 + numPairs*stepSize
+    endPopSize = startPopSize + numPairs*stepSize
 
     popSize = range(startPopSize, endPopSize, stepSize)
 
@@ -852,8 +827,9 @@ def task2Run():
     print(gameDict)
 
     #Print success rate for each population size
-    outputStr = map(lambda k: f'popSize of {k} has success rate of {gameDict[k]["successCount"]/gameCount} for {gameCount} games.', gameDict.keys())
-    outputFile = open("outputFile.txt","w")
+    # outputStr = map(lambda k: f'popSize of {k} has success rate of {gameDict[k]["successCount"]/gameCount} for {gameCount} games.', gameDict.keys())
+    outputStr = map(lambda k: f'{k}, {gameDict[k]["successCount"] / gameCount}', gameDict.keys())
+    outputFile = open("outputFile.csv","w")
     for l in outputStr:
         print(l)
         print("")

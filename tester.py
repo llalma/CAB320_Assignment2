@@ -15,6 +15,8 @@ Test crossover
 # from lan import mutate, get_item, op_address_list, decompose
 from number_game import *
 
+random.seed(3)
+np.random.seed(3)
 
 
 Q = pick_numbers()
